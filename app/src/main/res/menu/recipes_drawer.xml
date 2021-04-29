@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_global_search"
+            android:icon="@drawable/ic_baseline_search_24"
+            android:title="Global Search" />
+
+
+        <item
+            android:id="@+id/nav_nutrients"
+            android:icon="@drawable/ic_baseline_search_24"
+            android:title="Search by nutrients" />
+        <item
+            android:id="@+id/nav_ingredients"
+            android:icon="@drawable/ic_baseline_search_24"
+            android:title="Search by ingredients" />
+
+    </group>
+
+</menu>

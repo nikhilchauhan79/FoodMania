@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "511434323338",
+    "project_id": "foodrecipes-64cad",
+    "storage_bucket": "foodrecipes-64cad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511434323338:android:6dca3ca75a67c9f0a8c473",
+        "android_client_info": {
+          "package_name": "com.example.foodrecipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511434323338-lsi85pkrt5q1e0n0bna4rnp6ui475h4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC524GsGYbW87rRucSlykphA_c6NSaRKcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511434323338-lsi85pkrt5q1e0n0bna4rnp6ui475h4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
