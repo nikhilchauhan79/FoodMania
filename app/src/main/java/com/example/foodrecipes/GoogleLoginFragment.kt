@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_google_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -89,9 +90,9 @@ class GoogleLoginFragment : Fragment() {
 //            val action =
 //                GoogleLoginFragmentDirections.actionGoogleLoginFragmentToRegisterFragment()
 //            Navigation.findNavController(view).navigate(action);
-
-            Navigation.findNavController(requireView()).navigate(R.id.action_googleLoginFragment_to_registerFragment);
-
+            val navController=findNavController()
+            navController.navigate(R.id.action_googleLoginFragment_to_registerFragment)
+//            navController?.navigateUp()
         }
 
         login_button.setOnClickListener {

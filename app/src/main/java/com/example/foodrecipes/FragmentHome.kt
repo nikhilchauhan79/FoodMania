@@ -7,14 +7,18 @@ import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodrecipes.adapters.HomeCuisinesAdapter
+import com.example.foodrecipes.adapters.HomeCuisinesAdapter.OnItemClickListener
 import com.example.foodrecipes.api.RetrofitService
+import com.example.foodrecipes.model.ResultsHome
 import com.example.foodrecipes.repository.FoodRepository
 import com.example.foodrecipes.viewmodel.MainViewModel
 import com.example.foodrecipes.viewmodel.MyViewModelFactory
@@ -29,10 +33,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentHome.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentHome : Fragment() {
+class FragmentHome : Fragment(),OnItemClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    val API_KEY="3df53512b59f4a70930a953af1763e19"
+
 
     lateinit var viewModel: MainViewModel
     lateinit var recyclerView:RecyclerView
@@ -45,6 +51,8 @@ class FragmentHome : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -64,13 +72,10 @@ class FragmentHome : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
+        val adapter = HomeCuisinesAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(FoodRepository(retrofitService))).get(MainViewModel::class.java)
-
-
-        val adapter = HomeCuisinesAdapter()
 
         //now adding the adapter to recyclerview
         recyclerView.adapter = adapter
@@ -80,11 +85,24 @@ class FragmentHome : Fragment() {
             adapter.setCuisinesList(it.results)
         })
 
-        viewModel.getCuisines("indian","91e897fedcb94426b49b54cac3defa25")
+        viewModel.getCuisines("indian",API_KEY)
 
 
     }
 
+    override fun onItemClick(position: Int, sourceUrl: String) {
+        val bundle = Bundle()
+        bundle.putString("sourceUrl", sourceUrl)
+
+        val recipeDetailFragment = RecipeDetailFragment()
+        recipeDetailFragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction().apply {
+            replace(R.id.nav_host_fragment, recipeDetailFragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
 
 
 }

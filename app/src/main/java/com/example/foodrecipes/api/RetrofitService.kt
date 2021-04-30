@@ -1,10 +1,7 @@
 package com.example.foodrecipes.api
 
 import android.telecom.Call
-import com.example.foodrecipes.model.HomeCuisines
-import com.example.foodrecipes.model.ResponseRec
-import com.example.foodrecipes.model.Results
-import com.example.foodrecipes.model.ResultsHome
+import com.example.foodrecipes.model.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -14,6 +11,14 @@ interface RetrofitService {
 
     @GET("complexSearch")
     fun getResponse(@Query("query") query: String?): retrofit2.Call<ResponseRec>
+
+    @GET("findByIngredients")
+    fun searchRecipes(
+        @Query("apiKey") apiKey: String,
+        @Query("ingredients") ingredients: String,
+        @Query("number") number: Int,
+
+    ): retrofit2.Call<List<SearchResponse>>?
 
     @GET("complexSearch")
     fun getCuisines(

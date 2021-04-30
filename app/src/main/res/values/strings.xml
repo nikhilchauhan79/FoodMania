@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">FoodRecipes</string>
-    <string name="api_key">91e897fedcb94426b49b54cac3defa25</string>
-
     <string name="open">Open</string>
     <string name="close">Close</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fab_string">Add recipe</string>
+    <string name="add_recipe">Add your reciepe</string>
 </resources>

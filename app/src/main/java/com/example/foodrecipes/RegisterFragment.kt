@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.findFragment
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -18,6 +19,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
@@ -109,8 +111,13 @@ class RegisterFragment : Fragment() {
 //            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 //            val navController = navHostFragment.navController
 
-            val navController = Navigation.findNavController(view)
+//            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//            val navController = navHostFragment.navController
+
+            val navController=findNavController()
             navController.navigate(R.id.action_registerFragment_to_googleLoginFragment)
+//            navController?.navigateUp()
+
 
         }
 
@@ -129,6 +136,14 @@ class RegisterFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }

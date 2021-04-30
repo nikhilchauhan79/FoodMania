@@ -6,9 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.snippet_view_home_toolbar.*
-import com.example.foodrecipes.R;
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(home_toolbar)
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
+
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.nav_host_fragment, FragmentHome())
                 addToBackStack(null)
@@ -60,6 +62,41 @@ class MainActivity : AppCompatActivity() {
             drawer_layout.closeDrawer(GravityCompat.START)
             true
         }
+
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_search -> {
+                    // Respond to navigation item 1 click
+                    supportFragmentManager.beginTransaction().apply {
+                        replace(R.id.nav_host_fragment, SearchFragment())
+                        addToBackStack(null)
+                        commit()
+                    }
+                    true
+                }
+                R.id.nav_favorites -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+
+                R.id.nav_home -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+
+                R.id.nav_favorites -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+
+                R.id.nav_favorites -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+                else -> false
+            }
+        }
+
 
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

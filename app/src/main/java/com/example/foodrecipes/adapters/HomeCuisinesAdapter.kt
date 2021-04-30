@@ -1,6 +1,5 @@
 package com.example.foodrecipes.adapters
 
-import android.graphics.Movie
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +12,12 @@ import com.example.foodrecipes.R
 import com.example.foodrecipes.model.ResultsHome
 import kotlinx.android.synthetic.main.dish_card.view.*
 import com.bumptech.glide.module.AppGlideModule
+
 @GlideModule
 class AppGlideModule : AppGlideModule()
 
-class HomeCuisinesAdapter() : RecyclerView.Adapter<HomeCuisinesAdapter.ViewHolder>() {
+class HomeCuisinesAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<HomeCuisinesAdapter.ViewHolder>() {
     var cuisines = mutableListOf<ResultsHome>()
-
     //this method is returning the view for each item in the list
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeCuisinesAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.dish_card, parent, false)
@@ -36,7 +35,8 @@ class HomeCuisinesAdapter() : RecyclerView.Adapter<HomeCuisinesAdapter.ViewHolde
     }
 
     //the class is hodling the list view
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
+        lateinit var sourceUrl:String
 
         fun bindItems(cuisine: ResultsHome) {
             val textViewCredit = itemView.findViewById(R.id.home_credits_text) as TextView
@@ -76,13 +76,28 @@ class HomeCuisinesAdapter() : RecyclerView.Adapter<HomeCuisinesAdapter.ViewHolde
                 .into(itemView.image_view_dish_card);
 
 
+
         }
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position,cuisines[position].sourceUrl.toString())
+            }
+        }
+
+
     }
 
     fun setCuisinesList(cuisines: List<ResultsHome>) {
         this.cuisines = cuisines.toMutableList()
         notifyDataSetChanged()
     }
-
+    interface OnItemClickListener {
+        fun onItemClick(position: Int,sourceUrl:String)
+    }
 
 }
