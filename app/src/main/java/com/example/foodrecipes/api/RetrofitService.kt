@@ -2,6 +2,7 @@ package com.example.foodrecipes.api
 
 import android.telecom.Call
 import com.example.foodrecipes.model.*
+import com.google.gson.JsonArray
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -18,7 +19,7 @@ interface RetrofitService {
         @Query("ingredients") ingredients: String,
         @Query("number") number: Int,
 
-    ): retrofit2.Call<List<SearchResponse>>?
+    ): retrofit2.Call<JsonArray>?
 
     @GET("complexSearch")
     fun getCuisines(

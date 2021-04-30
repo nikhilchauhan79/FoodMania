@@ -12,11 +12,11 @@
         <item
             android:id="@+id/nav_diet"
             android:icon="@drawable/ic_baseline_search_24"
-            android:title="Diet" />
+            android:title="Login Feature" />
         <item
             android:id="@+id/nav_equipment"
             android:icon="@drawable/ic_baseline_search_24"
-            android:title="Equipment" />
+            android:title="Register Email/password" />
         <item
             android:id="@+id/nav_type"
             android:icon="@drawable/ic_baseline_search_24"

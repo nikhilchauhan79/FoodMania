@@ -15,12 +15,11 @@ import com.example.foodrecipes.model.ResultsHome
 import kotlinx.android.synthetic.main.dish_card.view.*
 import com.bumptech.glide.module.AppGlideModule
 import com.example.foodrecipes.model.SearchRecipesData
-import com.example.foodrecipes.model.SearchResponse
 import kotlinx.android.synthetic.main.search_result_card.view.*
 
 
 class SearchResultAdapter() : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
-    var searchResultsList = mutableListOf<SearchResponse>()
+    var searchResultsList = mutableListOf<SearchRecipesData>()
     //this method is returning the view for each item in the list
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.search_result_card, parent, false)
@@ -29,7 +28,7 @@ class SearchResultAdapter() : RecyclerView.Adapter<SearchResultAdapter.ViewHolde
 
     //this method is binding the data on the list
     override fun onBindViewHolder(holder: SearchResultAdapter.ViewHolder, position: Int) {
-        searchResultsList[0].searchResponse?.get(position)?.let { holder.bindItems(it) }
+        holder.bindItems(searchResultsList[position])
     }
 
     //this method is giving the size of the list
@@ -64,8 +63,14 @@ class SearchResultAdapter() : RecyclerView.Adapter<SearchResultAdapter.ViewHolde
 
     }
 
-    fun setCuisinesList(searchRecipesData: List<SearchResponse>) {
-        this.searchResultsList = searchRecipesData.toMutableList()
+//    fun setCuisinesList(searchRecipesData: List<SearchRecipesData>) {
+//        this.searchResultsList = searchRecipesData.toMutableList()
+//        notifyDataSetChanged()
+//    }
+
+
+    fun addCuisines(searchRecipesData:SearchRecipesData) {
+        this.searchResultsList.add(searchRecipesData)
         notifyDataSetChanged()
     }
 

@@ -2,7 +2,7 @@ package com.example.foodrecipes.model
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchResponse(val searchResponse:List<SearchRecipesData>?)
+//data class SearchResponse(val searchResponse:JsonArray?)
 
 //data class List<SearchResponse>(val searchResponse:List<SearchRecipesData>?)
 
@@ -21,7 +21,7 @@ data class Ingredients(
     val aisle: String?,
     val amount: Int?,
     val id: Int?,
-    val image: Int?,
+    val image: String?,
     val name: String?,
     val original: String?,
     val originalName: String?,

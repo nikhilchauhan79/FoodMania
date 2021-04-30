@@ -2,21 +2,26 @@ package com.example.foodrecipes
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodrecipes.adapters.HomeCuisinesAdapter
 import com.example.foodrecipes.adapters.SearchResultAdapter
 import com.example.foodrecipes.api.RetrofitService
+import com.example.foodrecipes.model.SearchRecipesData
 import com.example.foodrecipes.repository.FoodRepository
 import com.example.foodrecipes.viewmodel.MainViewModel
 import com.example.foodrecipes.viewmodel.MyViewModelFactory
+import com.google.gson.Gson
+import org.json.JSONArray
+import org.json.JSONObject
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +39,7 @@ class SearchFragment : Fragment() {
     private var param2: String? = null
     lateinit var searchView: SearchView
 
-    val API_KEY="3df53512b59f4a70930a953af1763e19"
+    val API_KEY="2e177bddd9444c04abd0981a584bfecb"
 
     lateinit var viewModel: MainViewModel
     lateinit var recyclerView: RecyclerView
@@ -95,21 +100,53 @@ class SearchFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(FoodRepository(retrofitService))).get(MainViewModel::class.java)
 
-        viewModel.searchRecipes(API_KEY, "apples,+flour,+sugar",2)
 
         //now adding the adapter to recyclerview
         recyclerView.adapter = adapter
 
         viewModel.searchResponseList.observe(viewLifecycleOwner, Observer {
             Log.d("TAG", "onCreate: $it")
-            adapter.setCuisinesList(it)
+
+            val gson = Gson()
+
+//            val jsonarray = JSONArray(it)
+
+            for (i in 0 until it.size()) {
+//                val jsonobject: JSONObject = jsonarray.getJSONObject(i)
+                val recipeData: SearchRecipesData = gson.fromJson(it.get(i), SearchRecipesData::class.java) //input is your String
+                adapter.addCuisines(recipeData)
+            }
+
         })
 
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
 
-                return false
+
+                searchView.queryHint="Enter comma separated list of ingre. to include in dish"
+
+                if(query?.contains(",")==false && query.length>0){
+                    viewModel.searchRecipes(API_KEY, query,2)
+                    return true
+
+                }
+                val empty = query?.filter { !it.isWhitespace() }?.split(",")
+
+                if(empty?.isNullOrEmpty()!!){
+                    Toast.makeText(context,"Please enter one or more ingredients separated by commas",Toast.LENGTH_SHORT).show()
+                    return true
+                }
+
+                val text = filterQuery(empty as ArrayList<String>)
+//                println(text)
+
+                if (text != null) {
+                    viewModel.searchRecipes(API_KEY, text,2)
+                }
+
+
+                return true
 
             }
 
@@ -121,5 +158,24 @@ class SearchFragment : Fragment() {
         })
 
 
+    }
+
+    fun filterQuery(newString: ArrayList<String>):String? {
+        var newStr=""
+        for ((index, element) in newString.withIndex()) {
+            println("$index -> $element")
+            if(index==0){
+                newStr+=element+","
+            }else {
+                if(index==newString.lastIndex){
+                    newStr += "+" + element
+                    return newStr
+
+                }
+                newStr += "+" + element+","
+            }
+
+        }
+        return newStr
     }
 }

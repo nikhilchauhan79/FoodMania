@@ -10,6 +10,7 @@
 
 
 
+
 <!--    <RelativeLayout-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent">-->
@@ -31,17 +32,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </androidx.appcompat.widget.Toolbar>
+
+
     <androidx.fragment.app.FragmentContainerView
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
+        android:layout_below="@id/toolbar"
         android:layout_above="@id/bottom_navigation"
         app:navGraph="@navigation/nav_graph"
         android:id="@+id/nav_host_fragment">
 
 
     </androidx.fragment.app.FragmentContainerView>
+
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

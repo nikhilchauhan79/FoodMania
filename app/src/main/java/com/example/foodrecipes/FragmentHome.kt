@@ -37,7 +37,7 @@ class FragmentHome : Fragment(),OnItemClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    val API_KEY="3df53512b59f4a70930a953af1763e19"
+    val API_KEY="2e177bddd9444c04abd0981a584bfecb"
 
 
     lateinit var viewModel: MainViewModel

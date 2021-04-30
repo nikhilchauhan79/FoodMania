@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,7 +28,6 @@ import kotlinx.android.synthetic.main.fragment_register.view.*
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private lateinit var auth: FirebaseAuth
 
 /**
  * A simple [Fragment] subclass.
@@ -38,11 +38,10 @@ class RegisterFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         auth = FirebaseAuth.getInstance()
 
@@ -72,16 +71,22 @@ class RegisterFragment : Fragment() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
 
-//        updateUI(currentUser)
+        updateUI(currentUser)
     }
 
     fun createUser(email: String, password: String) {
+        auth = FirebaseAuth.getInstance()
+
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d("success", "createUser: " + "task successful")
+                    Toast.makeText(context,"Login Successful------"+task.exception.toString(),Toast.LENGTH_SHORT).show()
+
                 } else {
                     Log.d("failed", "createUser: " + "task failed" + task.exception)
+                    Toast.makeText(context,"Login UnSuccessful------"+task.result.toString(),Toast.LENGTH_SHORT).show()
+
 
                 }
             }
@@ -114,8 +119,8 @@ class RegisterFragment : Fragment() {
 //            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 //            val navController = navHostFragment.navController
 
-            val navController=findNavController()
-            navController.navigate(R.id.action_registerFragment_to_googleLoginFragment)
+//            val navController=findNavController()
+//            navController.navigate(R.id.action_registerFragment_to_googleLoginFragment)
 //            navController?.navigateUp()
 
 
@@ -146,4 +151,8 @@ class RegisterFragment : Fragment() {
         super.onResume()
     }
 
+    private fun updateUI(user: FirebaseUser?) {
+        Toast.makeText(context,"You are already logged in",Toast.LENGTH_SHORT).show()
+
+    }
 }
